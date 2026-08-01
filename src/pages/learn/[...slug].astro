@@ -1,0 +1,15 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+export async function getStaticPaths() { return (await getCollection('lessons')).map((lesson) => ({ params: { slug: lesson.id }, props: { lesson } })); }
+const { lesson } = Astro.props;
+const { Content } = await render(lesson);
+---
+<BaseLayout title={`${lesson.data.title} | Statement Lab`} description={lesson.data.description}>
+  <article class="lesson-page">
+    <a class="back-link" href="/#course">← Course overview</a>
+    <header><p class="eyebrow">Module {lesson.data.order} · {lesson.data.duration} · {lesson.data.standard}</p><h1>{lesson.data.title.replace(/^\d+\. /, '')}</h1><p class="lead">{lesson.data.description}</p><p class="reviewed">Last reviewed: {lesson.data.reviewed}</p></header>
+    <div class="lesson-content"><Content /></div>
+    <aside class="next-step"><h2>Make it stick</h2><p>Use the practice lab to trace a transaction, calculate a ratio, or answer a scenario question.</p><a class="button" href="/lab">Practice this concept</a></aside>
+  </article>
+</BaseLayout>

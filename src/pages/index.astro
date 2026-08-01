@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+const lessons = (await getCollection('lessons')).sort((a, b) => a.data.order - b.data.order);
+---
+<BaseLayout description="A private, global course for learning to read financial statements.">
+  <section class="hero">
+    <p class="eyebrow">Financial-report literacy, from zero to confident</p>
+    <h1>Read the story behind the numbers.</h1>
+    <p class="lead">Statement Lab teaches you to connect financial statements, notes, audit reports, and management commentary—across US GAAP, IFRS, and Thai filings.</p>
+    <div class="actions"><a class="button" href="#course">Start the course</a><a class="button secondary" href="/lab">Open practice lab</a></div>
+    <dl class="hero-stats"><div><dt>10</dt><dd>modules</dd></div><div><dt>30–40h</dt><dd>self-paced</dd></div><div><dt>Local</dt><dd>private progress</dd></div></dl>
+  </section>
+  <section class="path" aria-labelledby="path-heading">
+    <div><p class="eyebrow">Your learning path</p><h2 id="path-heading">Start with the reports. End with evidence.</h2></div>
+    <ol><li><strong>Build the map</strong><span>Understand the accounting equation and reporting context.</span></li><li><strong>Read the core</strong><span>Income, balance sheet, and cash flow—together.</span></li><li><strong>Investigate the evidence</strong><span>Notes, audit, management narrative, and segments.</span></li><li><strong>Apply your judgement</strong><span>Work through an unfamiliar report in the capstone.</span></li></ol>
+  </section>
+  <section id="course" class="course" aria-labelledby="course-heading">
+    <div class="section-heading"><div><p class="eyebrow">Course</p><h2 id="course-heading">The full reporting package, in priority order.</h2></div><button type="button" class="text-button" data-reset-progress>Reset progress</button></div>
+    <div class="progress-row"><div class="progress-bar" aria-label="Course progress"><span data-progress-bar></span></div><p data-progress-label>0 of {lessons.length} complete</p></div>
+    <div class="lesson-grid">
+      {lessons.map((lesson) => <article class="lesson-card" data-lesson-card={lesson.id}>
+        <div class="lesson-meta"><span>Module {lesson.data.order}</span><span>{lesson.data.duration}</span></div>
+        <h3><a href={`/learn/${lesson.id}`}>{lesson.data.title.replace(/^\d+\. /, '')}</a></h3>
+        <p>{lesson.data.description}</p><p class="tag">{lesson.data.standard}</p>
+        <label class="complete"><input type="checkbox" data-complete={lesson.id} /> <span>Mark complete</span></label>
+      </article>)}
+    </div>
+  </section>
+  <section class="callout"><div><p class="eyebrow">Practice while you learn</p><h2>Learn by tracing transactions—not by memorising definitions.</h2></div><a class="button" href="/lab">Go to practice lab</a></section>
+  <script>
+    import '../scripts/progress.ts';
+  </script>
+</BaseLayout>

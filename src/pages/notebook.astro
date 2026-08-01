@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Company Notebook | Statement Lab" description="Private on-device analysis notes.">
+  <section class="page-intro"><p class="eyebrow">Company notebook</p><h1>Record evidence, not a stock verdict.</h1><p class="lead">Use this for your own research. It does not make recommendations and saves only in this browser.</p></section>
+  <form class="notebook" data-notebook>
+    <label>Company / ticker<input name="company" placeholder="Example: Company name (ticker)" /></label><label>Filing link<input name="filing" type="url" placeholder="https://" /></label>
+    <label>Reporting context<textarea name="context" placeholder="Period, currency, unit, framework, and business model"></textarea></label><label>Evidence and trends<textarea name="evidence" placeholder="What changed across income, balance sheet, cash flow, and notes?"></textarea></label><label>Risks and unanswered questions<textarea name="risks" placeholder="What could invalidate your understanding?"></textarea></label><label>My current conclusion<textarea name="conclusion" placeholder="State uncertainty and what you need to verify next."></textarea></label>
+    <div class="actions"><button class="button" type="submit">Save on this device</button><button class="button secondary" type="button" data-export>Export backup</button><label class="button secondary file-input">Import backup<input type="file" accept="application/json" data-import /></label></div><p class="feedback" data-notebook-feedback></p>
+  </form>
+  <script>import '../scripts/notebook.ts';</script>
+</BaseLayout>

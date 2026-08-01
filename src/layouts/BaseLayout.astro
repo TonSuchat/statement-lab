@@ -1,0 +1,33 @@
+---
+import '../styles/global.css';
+const { title = 'Statement Lab', description = 'Learn to read financial reports.' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Statement Lab home"><span>SL</span> Statement Lab</a>
+      <nav aria-label="Primary navigation">
+        <a href="/#course">Course</a><a href="/lab">Practice lab</a><a href="/notebook">Notebook</a><a href="/sources">Sources</a>
+      </nav>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme">◐</button>
+    </header>
+    <main id="main"><slot /></main>
+    <footer><p>Personal financial-report learning tool. Educational only; not financial advice.</p><p>Progress and notes stay in this browser.</p></footer>
+    <script>
+      const key = 'statement-lab-theme';
+      document.documentElement.dataset.theme = localStorage.getItem(key) || 'light';
+      document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+        const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = next; localStorage.setItem(key, next);
+      });
+    </script>
+  </body>
+</html>
