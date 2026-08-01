@@ -6,11 +6,13 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "deploy": "pnpm build && wrangler pages deploy dist",
     "preview": "astro preview"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",
-    "astro": "^5.16.0"
+    "astro": "^5.16.0",
+    "wrangler": "^4.116.0"
   },
   "devDependencies": {
     "typescript": "^5.9.0"
